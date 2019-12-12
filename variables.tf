@@ -81,6 +81,12 @@ variable "launch_template_version" {
   default     = "$Latest"
 }
 
+variable "blue_green_asg" {
+  type        = bool
+  description = "Whether to name the ASG according to the LC for blue/green deployments"
+  default     = false
+}
+
 variable "associate_public_ip_address" {
   type        = bool
   description = "Associate a public IP address with an instance in a VPC"

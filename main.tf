@@ -124,10 +124,15 @@ resource "aws_launch_template" "default" {
   }
 }
 
+locals {
+  asg_name_based_lc = format("%s%s%s%s", module.label.id, var.delimiter, join("", aws_launch_template.default.*.id), var.delimiter)
+  asg_name_prefix   = var.blue_green_asg ? local.asg_name_based_lc : format("%s%s", module.label.id, var.delimiter)
+}
+
 resource "aws_autoscaling_group" "default" {
   count = var.enabled ? 1 : 0
 
-  name_prefix               = format("%s%s", module.label.id, var.delimiter)
+  name_prefix               = local.asg_name_prefix
   vpc_zone_identifier       = var.subnet_ids
   max_size                  = var.max_size
   min_size                  = var.min_size

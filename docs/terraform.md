@@ -6,6 +6,7 @@
 | attributes | Additional attributes (e.g. `1`) | list(string) | `<list>` | no |
 | autoscaling_policies_enabled | Whether to create `aws_autoscaling_policy` and `aws_cloudwatch_metric_alarm` resources to control Auto Scaling | bool | `true` | no |
 | block_device_mappings | Specify volumes to attach to the instance besides the volumes specified by the AMI | object | `<list>` | no |
+| blue_green_asg | Whether to name the ASG according to the LC for blue/green deployments | bool | `false` | no |
 | cpu_utilization_high_evaluation_periods | The number of periods over which data is compared to the specified threshold | number | `2` | no |
 | cpu_utilization_high_period_seconds | The period in seconds over which the specified statistic is applied | number | `300` | no |
 | cpu_utilization_high_statistic | The statistic to apply to the alarm's associated metric. Either of the following is supported: `SampleCount`, `Average`, `Sum`, `Minimum`, `Maximum` | string | `Average` | no |
