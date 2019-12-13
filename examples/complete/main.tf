@@ -38,6 +38,7 @@ module "autoscale_group" {
   max_size                    = var.max_size
   wait_for_capacity_timeout   = var.wait_for_capacity_timeout
   associate_public_ip_address = true
+  blue_green_asg              = true
   user_data_base64            = base64encode(local.userdata)
 
   tags = {

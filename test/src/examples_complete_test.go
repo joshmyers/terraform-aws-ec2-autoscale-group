@@ -1,6 +1,7 @@
 package test
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/gruntwork-io/terratest/modules/terraform"
@@ -41,12 +42,16 @@ func TestExamplesComplete(t *testing.T) {
 	assert.Equal(t, []string{"172.16.96.0/19", "172.16.128.0/19"}, publicSubnetCidrs)
 
 	// Run `terraform output` to get the value of an output variable
-	autoscalingGroupName := terraform.Output(t, terraformOptions, "autoscaling_group_name")
-	// Verify we're getting back the outputs we expect
-	assert.Contains(t, autoscalingGroupName, "eg-test-ec2-autoscale-group")
-
-	// Run `terraform output` to get the value of an output variable
 	launchTemplateArn := terraform.Output(t, terraformOptions, "launch_template_arn")
 	// Verify we're getting back the outputs we expect
 	assert.Contains(t, launchTemplateArn, "arn:aws:ec2:us-east-2:126450723953:launch-template")
+
+	// Run `terraform output` to get the value of an output variable
+	launchTemplateId := terraform.Output(t, terraformOptions, "launch_template_id")
+	expectedAutoscalingGroupName := fmt.Sprintf("eg-test-ec2-autoscale-group-%s", launchTemplateId)
+
+	// Run `terraform output` to get the value of an output variable
+	autoscalingGroupName := terraform.Output(t, terraformOptions, "autoscaling_group_name")
+	// Verify we're getting back the outputs we expect
+	assert.Contains(t, autoscalingGroupName, expectedAutoscalingGroupName)
 }
